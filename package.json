@@ -8,8 +8,13 @@
     "start": "webpack-dev-server"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {},
+  "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+},
+
+  "devDependencies": {
+   "gh-pages": "^2.0.1"},
   "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.0",
