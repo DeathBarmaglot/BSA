@@ -1,0 +1,20 @@
+.fighter-preview___root {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 250px;
+}
+
+.fighter-preview___right {
+  align-items: flex-end;
+}
+
+.fighter-preview___right img {
+height: 300px;
+ transform: rotateY(-180deg);
+}
+.fighter-preview___left {
+  align-items: flex-start;
+}
+
+.fighter-preview___left img {
+height: 300px;}
