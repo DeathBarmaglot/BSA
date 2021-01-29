@@ -1,0 +1,177 @@
+﻿<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Street Fighters</title>
+    <style>
+
+        img {
+            position: fixed;
+            margin: 0px;
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+        }
+
+        form {
+            position: absolute;
+            background-color: rgba(189, 199, 193, 0.5);
+            right: 5%;
+            top: 20%;
+            border: #546666 1px solid;
+            padding: 15px;
+        }
+
+        input {
+            border: none;
+            outline: none;
+            background-color: rgb(189, 199, 193);
+            font-family: "Microsoft Sans Serif";
+            font-size: 22px;
+        }
+
+        input:focus {
+            border: 0px;
+            background-color: #dfe8e8;
+        }
+
+        hr {
+            border: 0px;
+            height: 2px;
+            background-color: #dfe8e8;
+            transition-property: background-color;
+            transition-duration: 1s;
+        }
+
+        button {
+            position: relative;
+            left: 20%;
+            width: 60%;
+            min-height: 25px;
+            float: left;
+            border: 2px solid;
+            border-radius: 5px;
+            border-image-source: linear-gradient(to bottom right, #6da5ff, #121390);
+            border-image-slice: 1;
+            background: linear-gradient(to bottom, #2afff2, #6facff) #fff8fd;
+            margin-top: 5px;
+            font-family: "Times New Roman";
+            font-size: 22px;
+        }
+
+        button:active {
+            padding-left: 2px;
+            border-image-source: linear-gradient(to top left, #6da5ff, #121390);
+            background: linear-gradient(to top, #2d4cff, #6facff) #fff8fd;
+        }
+
+        section {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        div {
+            position: relative;
+            float: left;
+            margin-left: 5%;
+            font-family: "Microsoft Sans Serif";
+            font-size: 22px;
+        }
+
+        .sign {
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="index.jpg" alt="first_page">
+    <form name="userForm">
+        <section>
+            <div id="sinn" class="sign" onclick="selectInUp(event)" > Sign In </div>
+            <div id="supp" class="sign" onclick="selectInUp(event)" > Sign Up </div>
+        </section>
+        <hr>
+        <input name="firstName" class="inputUp" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="First name">
+        <hr>
+        <input name="lastName" class="inputUp" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Last name">
+        <hr>
+        <input name="email" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Email">
+        <hr>
+        <input name="fone" class="inputUp" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Phone number">
+        <hr>
+        <input name="password" onfocus="dofocus(event)" onblur="doblur(event)" type="password" style="border: 0px; outline:none" placeholder="Password" value="">
+        <hr>
+        <button id="submit" type="submit">Sign Up</button>
+    </form>
+    <script>
+        let mode = false;
+        function dofocus(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#1d3dad";
+        }
+        function doblur(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#dfe8e8";
+        }
+        function configInput(logg) {
+            let elems = document.getElementsByClassName("inputUp");
+            let disp = mode ? "none" : "block";
+            for (let i=0; i < elems.length; i++) {
+                elems[i].style.display = disp;
+                elems[i].nextElementSibling.style.display = disp;
+            }
+            document.getElementById("supp").style.color = mode ? "gray" : "black";
+            document.getElementById("sinn").style.color = mode ? "black" : "gray";            
+            if (logg) document.forms["userForm"].elements["password"].focus()
+            else document.forms["userForm"].elements["firstName"].focus()
+        }
+        function selectInUp(event) {
+            mode = (event.currentTarget.id == "sinn");
+            configInput(mode);
+        }
+        window.onload = function () {
+            let lastEmail = localStorage.getItem("lastEmail");
+            mode = (lastEmail);
+            if (mode) document.forms["userForm"].elements["email"].value = lastEmail;
+            configInput(mode);
+            document.getElementById("submit").addEventListener("click", function (event) {
+                event.preventDefault();
+                let userForm = document.forms["userForm"];
+                let firstName = userForm.elements["firstName"].value;
+                let lastName = userForm.elements["lastName"].value;
+                let email = userForm.elements["email"].value;
+                let phone = userForm.elements["fone"].value;
+                let password = userForm.elements["password"].value;
+                let user;
+                if (mode) {
+                    user = JSON.stringify({email: email, password: password});
+                    action = "/api/auth/login";
+                } else {
+                    user = JSON.stringify({firstName: firstName, lastName: lastName, email: email, phoneNumber: phone, password: password});
+                    action = "/api/users";
+                }
+                let request = new XMLHttpRequest();
+                request.open("POST", action, true);   
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    try {
+                        let recData = JSON.parse(request.response);
+                        if (recData.error == true) alert("Error "+recData.status+"\n"+recData.message)
+                        else {
+                            localStorage.setItem("lastEmail",email);
+                            sessionStorage.setItem("userId",recData.id);
+                            let request = new XMLHttpRequest();
+                            document.location.href = "client/pages/gloryHall.html?id="+recData.id;
+                        }
+                    } catch (error) {
+                        alert(error);    
+                    }
+                });
+                request.send(user);
+            });
+        }
+    </script>
+</body>
+</html>
+

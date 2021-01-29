@@ -1,0 +1,334 @@
+{
+  "users": [
+    {
+      "firstName": "First",
+      "lastName": "Last",
+      "email": "dddf@ksjd.cnd",
+      "phoneNumber": "+38(066)308-92-31",
+      "password": "sssss",
+      "id": "3b164ca6-ac8f-4eb8-bef3-b9b62445bbcd",
+      "createdAt": "2020-05-13T14:10:12.270Z"
+    },
+    {
+      "firstName": "First2",
+      "lastName": "Last2",
+      "email": "dsdf@ksjd.cnd",
+      "phoneNumber": "066 000-00-00",
+      "password": "ssssss",
+      "id": "0aa5bbc4-1a9a-428f-a989-2e434605603c",
+      "createdAt": "2020-05-14T08:12:06.515Z",
+      "updatedAt": "2020-05-15T13:14:59.952Z"
+    },
+    {
+      "email": "www@df.dd",
+      "password": "ssssss",
+      "firstName": "Garry1",
+      "lastName": "Garry2",
+      "phoneNumber": "+380662585858",
+      "id": "a64ff31a-dd7c-4e23-9fdc-ea11c7dd6a13",
+      "createdAt": "2020-05-16T07:36:06.036Z"
+    },
+    {
+      "email": "john_doe@mail.mail",
+      "password": "333333",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phoneNumber": "+38(066)0000000",
+      "id": "de5f9a70-3403-4dd9-b359-b6f872c3ce62",
+      "createdAt": "2020-05-16T07:43:46.284Z",
+      "updatedAt": "2021-01-21T15:31:23.306Z"
+    },
+    {
+      "firstName": "Garry",
+      "lastName": "Levin",
+      "email": "vist_01@ukr.net",
+      "phoneNumber": "0000000000",
+      "password": "111111",
+      "id": "051dd4a6-90dc-4e55-bdd6-c639b2ca874d",
+      "createdAt": "2020-11-11T13:18:52.172Z"
+    },
+    {
+      "firstName": "2132",
+      "lastName": "12312",
+      "email": "fghjkl11@gmail.com",
+      "phoneNumber": "0999999999",
+      "password": "cvthnm11",
+      "id": "9a124b1c-b686-47d7-8e75-c2705b38dce9",
+      "createdAt": "2021-01-24T17:05:29.548Z"
+    },
+    {
+      "firstName": "q",
+      "lastName": "q",
+      "email": "fghjkl@gmail.com",
+      "phoneNumber": "0999999999",
+      "password": "cvthnm",
+      "id": "09774145-84ca-487c-b674-a6981b9e3472",
+      "createdAt": "2021-01-24T19:44:25.508Z"
+    }
+  ],
+  "fighters": [
+    {
+      "name": "Ryu",
+      "health": 45,
+      "power": 4,
+      "defense": 3,
+      "id": "3e31ecff-84f9-4f3f-99ca-a2889ec32d2a",
+      "createdAt": "2020-05-16T15:20:41.073Z"
+    },
+    {
+      "name": "Dhalsim",
+      "health": 60,
+      "power": 3,
+      "defense": 1,
+      "id": "6bd98c72-26a1-4aea-8fcc-28c6705d7bb2",
+      "createdAt": "2020-05-16T15:20:41.077Z"
+    },
+    {
+      "name": "Zangief",
+      "health": 60,
+      "power": 4,
+      "defense": 1,
+      "id": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "createdAt": "2020-05-16T15:20:41.083Z"
+    },
+    {
+      "name": "Ken",
+      "health": 45,
+      "power": 3,
+      "defense": 4,
+      "id": "e251daf6-9954-4938-8111-6c35fceb9240",
+      "createdAt": "2020-05-16T15:20:41.086Z"
+    },
+    {
+      "name": "Bison",
+      "health": 45,
+      "power": 5,
+      "defense": 4,
+      "id": "cb7af1b1-63a0-4ff7-86c6-707b877fe207",
+      "createdAt": "2020-05-16T15:20:41.089Z"
+    },
+    {
+      "name": "Bossom",
+      "health": "50",
+      "power": "5",
+      "defense": "4",
+      "id": "a3c5a4ba-3924-4c75-b42f-e4b9c99097de",
+      "createdAt": "2020-05-16T16:48:54.469Z"
+    },
+    {
+      "name": "Lui",
+      "health": "50",
+      "power": "5",
+      "defense": "4",
+      "id": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "createdAt": "2020-05-16T17:17:25.792Z"
+    },
+    {
+      "name": "Guile",
+      "health": 45,
+      "power": 4,
+      "defense": 3,
+      "id": "7b5c3766-442a-4e3a-9567-2e90573ace1c",
+      "createdAt": "2021-01-24T17:05:46.888Z"
+    }
+  ],
+  "fights": [
+    {
+      "fighter1": "3e31ecff-84f9-4f3f-99ca-a2889ec32d2a",
+      "fighter2": "3e31ecff-84f9-4f3f-99ca-a2889ec32d2a",
+      "log": [
+        "0aa5bbc4-1a9a-428f-a989-2e434605603c",
+        "2020-05-16T16:37:58.387Z",
+        20,
+        20,
+        22,
+        22
+      ],
+      "id": "49f3df6f-172e-467a-bf25-a16c104219fd",
+      "createdAt": "2020-05-16T16:37:58.429Z"
+    },
+    {
+      "fighter1": "cb7af1b1-63a0-4ff7-86c6-707b877fe207",
+      "fighter2": "e251daf6-9954-4938-8111-6c35fceb9240",
+      "log": [
+        "3b164ca6-ac8f-4eb8-bef3-b9b62445bbcd",
+        "2020-05-16T16:41:15.245Z",
+        27,
+        30,
+        33,
+        -3
+      ],
+      "id": "071aba04-0365-4624-92df-7732906d1b98",
+      "createdAt": "2020-05-16T16:41:15.263Z"
+    },
+    {
+      "fighter1": "3e31ecff-84f9-4f3f-99ca-a2889ec32d2a",
+      "fighter2": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "log": [
+        "0aa5bbc4-1a9a-428f-a989-2e434605603c",
+        "2020-05-16T16:43:17.168Z",
+        12,
+        12,
+        24,
+        -2
+      ],
+      "id": "733a759b-b6c0-49eb-bc62-ba8603017c38",
+      "createdAt": "2020-05-16T16:43:17.175Z"
+    },
+    {
+      "fighter1": "a3c5a4ba-3924-4c75-b42f-e4b9c99097de",
+      "fighter2": "cb7af1b1-63a0-4ff7-86c6-707b877fe207",
+      "log": [
+        "de5f9a70-3403-4dd9-b359-b6f872c3ce62",
+        "2020-05-16T16:49:33.348Z",
+        27,
+        23,
+        18,
+        -1
+      ],
+      "id": "aa0367dd-4de4-42a5-87b2-b25212b912ac",
+      "createdAt": "2020-05-16T16:49:33.369Z"
+    },
+    {
+      "fighter1": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "fighter2": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "log": [
+        "de5f9a70-3403-4dd9-b359-b6f872c3ce62",
+        "2020-05-16T17:18:02.935Z",
+        10,
+        13,
+        49,
+        -2
+      ],
+      "id": "933cc2a1-5a54-4475-aa33-74807bff3ee8",
+      "createdAt": "2020-05-16T17:18:02.956Z"
+    },
+    {
+      "fighter1": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "fighter2": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "log": [
+        "0aa5bbc4-1a9a-428f-a989-2e434605603c",
+        "2020-05-16T17:18:45.490Z",
+        11,
+        13,
+        40,
+        0
+      ],
+      "id": "06990f31-0f20-4860-9992-eed79aaf3ad4",
+      "createdAt": "2020-05-16T17:18:45.517Z"
+    },
+    {
+      "fighter1": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "fighter2": "6bd98c72-26a1-4aea-8fcc-28c6705d7bb2",
+      "log": [
+        "a64ff31a-dd7c-4e23-9fdc-ea11c7dd6a13",
+        "2021-01-10T16:49:33.348Z",
+        29,
+        21,
+        11,
+        -1
+      ],
+      "id": "c2edc27b-dc78-47e2-ae66-5deb2329169d",
+      "createdAt": "2021-01-21T15:40:30.230Z"
+    },
+    {
+      "fighter1": "e251daf6-9954-4938-8111-6c35fceb9240",
+      "fighter2": "6bd98c72-26a1-4aea-8fcc-28c6705d7bb2",
+      "log": [
+        "a64ff31a-dd7c-4e23-9fdc-ea11c7dd6a13",
+        "2021-01-10T16:49:33.348Z",
+        31,
+        25,
+        14,
+        -1
+      ],
+      "id": "2ebe068f-2327-4160-8051-fbbc80a916ef",
+      "createdAt": "2021-01-21T15:41:34.307Z"
+    },
+    {
+      "fighter1": "a3c5a4ba-3924-4c75-b42f-e4b9c99097de",
+      "fighter2": "e251daf6-9954-4938-8111-6c35fceb9240",
+      "log": [
+        "051dd4a6-90dc-4e55-bdd6-c639b2ca874d",
+        "2021-01-21T15:44:03.971Z",
+        21,
+        23,
+        29,
+        0
+      ],
+      "id": "958882a9-7f78-4dce-8c7a-3a9fdde5d9e9",
+      "createdAt": "2021-01-21T15:44:03.981Z"
+    },
+    {
+      "fighter1": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "fighter2": "cb7af1b1-63a0-4ff7-86c6-707b877fe207",
+      "log": [
+        "051dd4a6-90dc-4e55-bdd6-c639b2ca874d",
+        "2021-01-21T15:45:02.045Z",
+        15,
+        15,
+        25,
+        -1
+      ],
+      "id": "ecca9994-46f4-4d2e-aed4-239f63fab134",
+      "createdAt": "2021-01-21T15:45:02.053Z"
+    },
+    {
+      "fighter1": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "fighter2": "a3c5a4ba-3924-4c75-b42f-e4b9c99097de",
+      "log": [
+        "051dd4a6-90dc-4e55-bdd6-c639b2ca874d",
+        "2021-01-23T11:17:52.134Z",
+        23,
+        25,
+        10,
+        -1
+      ],
+      "id": "9de5b770-3e2b-462c-912b-8d594b6ca3ca",
+      "createdAt": "2021-01-23T11:17:52.165Z"
+    }
+  ],
+  "details": [
+    {
+      "id": "3e31ecff-84f9-4f3f-99ca-a2889ec32d2a",
+      "source": "https://media.giphy.com/media/kdHa4JvihB2gM/giphy.gif",
+      "createdAt": "2020-05-16T15:20:41.101Z"
+    },
+    {
+      "id": "6bd98c72-26a1-4aea-8fcc-28c6705d7bb2",
+      "source": "https://i.pinimg.com/originals/c0/53/f2/c053f2bce4d2375fee8741acfb35d44d.gif",
+      "createdAt": "2020-05-16T15:20:41.106Z"
+    },
+    {
+      "id": "28c504f4-2ebb-442f-80a8-cbdf277e07c6",
+      "source": "https://66.media.tumblr.com/tumblr_lq8g3548bC1qd0wh3o1_400.gif",
+      "createdAt": "2020-05-16T15:20:41.110Z"
+    },
+    {
+      "id": "3aab1a88-8104-40a9-81ea-aa102dfbf068",
+      "source": "https://media1.giphy.com/media/nlbIvY9K0jfAA/source.gif",
+      "createdAt": "2020-05-16T15:20:41.113Z"
+    },
+    {
+      "id": "e251daf6-9954-4938-8111-6c35fceb9240",
+      "source": "https://i.pinimg.com/originals/46/4b/36/464b36a7aecd988e3c51e56a823dbedc.gif",
+      "createdAt": "2020-05-16T15:20:41.115Z"
+    },
+    {
+      "id": "cb7af1b1-63a0-4ff7-86c6-707b877fe207",
+      "source": "http://www.fightersgeneration.com/np5/char/ssf2hd/bison-hdstance.gif",
+      "createdAt": "2020-05-16T15:20:41.118Z"
+    },
+    {
+      "id": "a3c5a4ba-3924-4c75-b42f-e4b9c99097de",
+      "source": "https://i.gifer.com/ZeQb.gif",
+      "createdAt": "2020-05-16T16:48:54.487Z"
+    },
+    {
+      "id": "c8ee77ed-55a1-4929-b666-fae8e961e22e",
+      "source": "https://i.gifer.com/origin/c5/c5fcfbe536ff864b1e9294f71cf6f5ec_w200.gif",
+      "createdAt": "2020-05-16T17:17:25.814Z"
+    }
+  ],
+  "controls": []
+}

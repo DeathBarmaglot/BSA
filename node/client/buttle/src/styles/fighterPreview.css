@@ -1,0 +1,130 @@
+.fighter-preview___root {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 250px;
+}
+
+.fighter-preview___right {
+  align-items: flex-end;
+}
+
+.fighter-preview___left {
+  align-items: flex-start;
+}
+
+.fighter-preview__show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 10%;
+  width: 20%;
+  height: 50%;
+  background-color: rgba(255, 254, 41, 0.3);
+  border: 5px solid #9a5308;
+  overflow: hidden;
+  animation: fighterInfo 1200ms linear;
+}
+
+.fighter-preview___img {
+  height: 55%;
+}
+
+@keyframes fighterInfo {
+  0%   { top: 100%; opacity: 0}
+  50%  { top: 50%; opacity: 0.8}
+  100% { top: 10%; opacity: 1}
+}
+
+#fighter-show__right {
+  right: 15%;
+}
+
+#fighter-show__right:hover {
+  background-color: rgba(41, 254, 41, 0.3);
+  border: 5px solid #0c5210;
+}
+
+#fighter-show__left {
+  left: 15%;
+}
+
+#fighter-show__left:hover {
+  background-color: rgba(254, 41, 41, 0.3);
+  border: 5px solid #5a0b1f;
+}
+
+.fighter-show__data {
+  display: flex;
+  align-items: center;
+  width: 95%;
+  margin-bottom: 1%;
+}
+
+.fighter-show__data_img {
+  margin-left: 2%;
+  width:  12%;
+  min-width: 24px;
+}
+
+.fighter-show__data_label {
+  width: 80%;
+  font-family: 'Times New Roman';
+  font-size: 1.3em;
+  color: chartreuse;
+  text-align: center;
+  margin: 1%;
+}
+
+.fighter-shield__show {
+  position: absolute;
+  width: 220px;
+  height: 430px;
+  bottom:  70px;
+  opacity: 0;
+}
+
+@keyframes bumbleAnimeLeft {
+    0% {  right: 60%}
+  100% {  right: 25%}
+}
+
+.fighter-bumble__left {
+  position: absolute;
+  z-index: 1;
+  right:   25%;
+  animation: bumbleAnimeLeft 350ms linear;
+}
+
+@keyframes bumbleAnimeBumm {
+  0% {  opacity: 0}
+100% {  opacity: 1}
+}
+
+.fighter-bumble-bumm__left {
+  position: absolute;
+  z-index: 1;
+  right: 25%;
+  animation: bumbleAnimeBumm 150ms linear;
+}
+
+@keyframes bumbleAnimeRight {
+  0% {  left:   50%}
+100% {  left:   23%}
+}
+
+.fighter-bumble__right {
+  position: absolute;
+  z-index: 1;
+  bottom: 350px;
+  left: 23%;
+  animation: bumbleAnimeRight 350ms linear;
+}
+
+.fighter-bumble-bumm__right {
+  position: absolute;
+  z-index: 1;
+  bottom: 350px;
+  left: 23%;
+  animation: bumbleAnimeBumm 150ms linear;
+}

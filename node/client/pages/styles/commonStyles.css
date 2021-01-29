@@ -1,0 +1,153 @@
+.background {
+    position: fixed;
+    margin: 0px;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+}
+
+.toplabel {
+    position: fixed;
+    left: 0px;
+    top: 3%;
+    width: 100%;
+    font-family: 'Times New Roman';
+    font-size: 6em;
+    color: #e2d881;
+    text-shadow: 2px 2px 2px #bb0b34;
+    text-align: center;
+}
+
+.button {
+    position: relative;
+    float: left;
+    width: 20%;
+    min-width: 100px;
+    min-height: 40px;
+    border: 2px solid;
+    border-radius: 5px;
+    border-image-source: linear-gradient(to bottom right, #26d62e, #259013);
+    border-image-slice: 1;
+    background: linear-gradient(to bottom, #86ffaf, #29f732) #fff8fd;
+    box-shadow: 5px 5px 15px rgba(135, 168, 196, 0.5);
+    margin: 15px;
+    word-wrap: break-word;
+    font: 22px Roboto;
+    font-weight: bold;
+}
+
+.button:active {
+    padding-left: 10px;
+    background: linear-gradient(to top, #65f9db, #78e4d9) #fff8fd;
+}
+
+.buttbox {
+    display: flex;
+    position: fixed;
+    bottom: 0%;
+    width: 100%;
+    justify-content: center;
+}
+
+.tablbox {
+    position: relative;
+    top: 150px;
+    margin-left: 3%;
+    margin-right: 3%;
+    width: 94vw; 
+    max-height: 65vh; 
+    overflow-y: auto;
+}
+
+#tabl {
+    position: relative;
+    background-color: #a3ffad;
+    border: 1px solid #222277;
+}
+
+tr {
+    vertical-align: center;
+    font-size: 1.2em;
+}
+
+.tHead {
+    text-align: center;
+    font-family: "Times New Roman";
+    font-weight: bold;
+    background: #fc0; /* Цвет фона первой колонки */
+    border: 1px solid #222277;
+    max-height: 15px;
+}
+
+.tRowC {
+    width: 10%;
+    border-bottom: 1px solid black;
+    background-color: rgb(0, 255, 98);
+    text-align: center;    
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tRowL {
+    width: 10%;
+    border-bottom: 1px solid black;
+    background-color: rgb(0, 255, 98);
+    text-align: left;  
+    padding-left: 5px;
+    padding-right: 5px;  
+}
+
+.tRowR {
+    width: 10%;
+    border-bottom: 1px solid black;
+    background-color: rgb(0, 255, 98);
+    text-align: right;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.tRowCC {
+    width: 25%;
+    border-bottom: 1px solid black;
+    background-color: rgb(0, 255, 98);
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+@keyframes editFormAnime {
+    0% { opacity: 0}
+  100% { opacity: 1}
+}
+
+input {
+    border: none;
+    outline: none;
+    background-color: rgb(189, 199, 193);
+    font-family: "Microsoft Sans Serif";
+    font-size: 22px;
+}
+
+input:focus {
+    border: 0px;
+    background-color: #dfe8e8;
+}
+
+hr {
+    border: 0px;
+    height: 2px;
+    background-color: #dfe8e8;
+    transition-property: background-color;
+    transition-duration: 1s;
+}
+
+.editLabel {
+    margin-left: 5%;
+    font-family: "Microsoft Sans Serif";
+    font-size: 20px;
+}
+
+.colLeft {
+    width: 300px;
+}

@@ -1,0 +1,237 @@
+﻿<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Street Fighters</title>
+    <link rel="stylesheet" href="styles/commonStyles.css">
+    <style>
+
+        .intoLabel {
+            position: relative;
+            float: right;
+            top: 150px;
+            font-size: 18px;
+            font-weight: bold;
+            right: 25%;
+        }
+
+        .editForm {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 30%;
+            width: 40%;
+            border: chocolate 5px solid;
+            background-color: rgb(190, 197, 201);
+            animation: editFormAnime;
+            animation-duration: 1s; 
+        }
+
+    </style>
+</head>
+<body>
+    <img class="background" src="img/gamersList.jpg" alt="gamersList_page">
+    <label class="toplabel" >List of registered Gamers</label>
+    <div class="tablbox">
+        <table id="tabl">
+            <tr>
+                <td class="tHead"> Имя геймера </td> <td class="tHead"> Фамилия геймера </td> <td class="tHead"> Дата регистрации </td> <td class="tHead"> Кол-во поединков </td><td class="tHead"> Контактная информация </td>
+            </tr>
+        </table>
+    </div>
+    <label class="intoLabel" >(Click on your line to edit or delete)</label>
+    <div class="buttbox">
+        <button id="save" class="button" onclick="togloryHall()">Rerurn to Hall of Glory</button>
+    </div>
+    <section id="gamerForm" class="editForm">
+        <form name="edits">
+        <table id=gamerTab style="margin-top: 20px">
+            <tr class = "colHeader">
+                <td class="colLeft" >  <label class="editLabel" > Your game ID : </label> </td>
+                <td>  <label id="editId" > </label> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" >  <label class="editLabel" > First Name : </label> </td>
+                <td> <input name="firstName" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="First name"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Second Name : </label> </td>
+                <td> <input name="lastName" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Last name"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Your Email : </label> </td>
+                <td> <input name="email" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Email"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Phone Number : </label> </td>
+                <td> <input name="fone" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Phone number"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Password : </label> </td>
+                <td> <input name="password" onfocus="dofocus(event)" onblur="doblur(event)" type="password" style="border: 0px; outline:none" placeholder="Password"> <hr> </td>
+            </tr>
+        </table>
+        </form>
+        <button id="save" class="button" onclick="saveEdit()">Save</button>
+        <button id="save" class="button" style="margin-left: 0px" onclick="canselEdit()">Cancel</button>
+        <button id="save" class="button" style="margin-left: 5%; background: linear-gradient(to top,  #ee7878, #c73939) #263e79; width: 30%" onclick="deleteGamer()">Delete accaunt</button>
+    </section>
+
+    <script>
+       
+        let gamers;
+        let tabl;
+        let editForm;
+
+        function dofocus(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#1d3dad";
+        }
+
+        function doblur(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#dfe8e8";
+        }
+
+        function togloryHall() {
+            document.location.href = "/client/pages/gloryHall.html";
+        }
+
+        function onTabClick(event) {
+            let reqs = [request("/api/users/"+sessionStorage.getItem("userId"))];
+            Promise.all(reqs)
+            .then(responses => {
+                gamer = JSON.parse(responses[0]);
+                document.getElementById("editId").innerText = gamer.id;
+                let userForm = document.forms["edits"];
+                userForm.elements["firstName"].value = gamer.firstName;
+                userForm.elements["lastName"].value = gamer.lastName;
+                userForm.elements["email"].value = gamer.email;
+                userForm.elements["fone"].value = gamer.phoneNumber;
+                userForm.elements["password"].value = gamer.password;
+                editForm.class = "editForm";
+                editForm.style.display = "block";
+                editForm.addEventListener("animationend",gamerEdit,true);
+                return;
+            })
+            .catch((error) => {
+                erData = JSON.parse(error);
+                alert("Ошибка "+erData.status+" !\n"+erData.message);
+            });
+        }
+
+        function gamerEdit() {
+            editForm.removeEventListener("animationend",gamerEdit,true);
+            editForm.style.animation = "";
+            let userForm = document.forms["edits"];
+            userForm.elements["firstName"].focus();
+        }
+
+        function saveEdit() {
+            if (confirm("Save edited Gamer's data ?")) {
+                let userForm = document.forms["edits"];
+                let firstName = userForm.elements["firstName"].value;
+                let lastName = userForm.elements["lastName"].value;
+                let email = userForm.elements["email"].value;
+                let phone = userForm.elements["fone"].value;
+                let password = userForm.elements["password"].value;
+                let user = JSON.stringify({ firstName: firstName, lastName: lastName, email: email, phoneNumber: phone, password: password });
+                let request = new XMLHttpRequest();
+                request.open("PUT", "/api/users/"+sessionStorage.getItem("userId"), true);   
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    try {
+                        let recData = JSON.parse(request.response);
+                        if (recData.error == true) alert("Error "+recData.status+"\n"+recData.message)
+                        else {
+                            canselEdit();
+                            updateList();
+                        }
+                    } catch (error) {
+                        alert(error);    
+                    }
+                });
+                request.send(user);
+            }
+        }
+
+        function deleteGamer() {
+            if (confirm("Delete Gamer's registration data ?")) {
+                let request = new XMLHttpRequest();
+                request.open("DELETE", "/api/users/"+sessionStorage.getItem("userId"), true);   
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    try {
+                        let recData = JSON.parse(request.response);
+                        if (recData.error == true) alert("Error "+recData.status+"\n"+recData.message)
+                        else {
+                            canselEdit();
+                            document.location.href = "/";
+                        }
+                    } catch (error) {
+                        alert(error);    
+                    }
+                });
+                request.send();
+            }
+        }
+
+        function canselEdit() {
+            editForm.class = "";
+            editForm.style.display = "none";
+        }
+
+        function createTableRow(tabData, tabClass) {
+            tabRow = document.createElement("tr");
+            tabData.forEach((data, index) => { tabRow.innerHTML += '<td class="'+tabClass[index]+'">'+data+'</td>' });
+            return tabRow
+        }
+
+        function formatData(data){
+            let datadata = new Date(data)
+            return datadata.getDate("D")+"."+datadata.getMonth("D")+"."+datadata.getFullYear();
+        }
+
+        function request(action) {
+            let req = new XMLHttpRequest();
+            req.open("GET", action, true);   
+            req.setRequestHeader("Content-Type", "application/json");            
+            req.send();
+            return new Promise((resolve,reject) => {
+                req.addEventListener("load", function () {
+                    if (req.status == 200) resolve(req.response)
+                    else reject(req.response);
+                }); 
+            });
+        }
+        
+        function updateList() {
+            while (tabl.children.length > 1) tabl.removeChild(tabl.lastChild);
+            let reqs = [request("/api/users"),request("/api/fights")];
+            Promise.all(reqs)
+            .then(responses => {
+                const gamers = JSON.parse(responses[0]);
+                gamers.forEach(gamer => Object.defineProperty(gamer, "fights", { writable:true, value:0 }));
+                const fights = JSON.parse(responses[1]);
+                fights.forEach(fight => {
+                    gamers.find(item => item.id === fight.log[0]).fights++;
+                });
+                gamers.forEach(gamer => {
+                    let tabRow = createTableRow([gamer.firstName,gamer.lastName,formatData(gamer.createdAt),gamer.fights,gamer.email + ", " + gamer.phoneNumber],["tRowL","tRowL","tRowR","tRowR","tRowC"]);
+                    tabRow.onclick = onTabClick;
+                    tabl.appendChild(tabRow);
+                });
+            })
+            .catch(alert);
+        }
+
+        window.onload = function() {
+            tabl = document.getElementById("tabl");
+            editForm = document.getElementById("gamerForm");
+            updateList();
+        }
+            
+    </script>
+
+</body>
+</html>
+

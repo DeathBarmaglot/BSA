@@ -1,0 +1,55 @@
+.controls_container {
+    width: 50vw;
+    height: 280px;
+    background-color: chartreuse;
+}
+
+.controls_box {
+    float: left;
+    width: calc(50% - 20px);
+    height: calc(100% - 100px);
+    background-color: rgb(219, 255, 182);
+    margin: 10px;
+    overflow: auto;
+}
+
+.controls_label {
+    float: left;
+    margin: 10px;
+    word-wrap: break-word;
+    max-width: 340px;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.controls_save_btn {
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    padding: 8px 35px;
+    text-align: center;
+    background: #0e9140;
+    color: #f8f9f4;
+    font-size: 22px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 6px 6px 7px 0px rgba(0, 0, 0, 0.75);
+    animation: fighterInfo 3000ms linear;
+}
+
+.controls_input {
+    margin-top: 10px;
+    width: 30%;
+}
+
+.controls_input_label {
+    margin: 10px 15px 0px 15px;
+    float: left;
+    width: 50%;
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.controls_br {
+    clear: both;
+}

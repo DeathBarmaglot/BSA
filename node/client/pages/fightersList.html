@@ -1,0 +1,342 @@
+﻿<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Street Fighters</title>
+    <link rel="stylesheet" href="styles/commonStyles.css">
+    <style>
+
+        .intoLabel {
+            position: relative;
+            float: left;
+            top: 150px;
+            font-size: 18px;
+            font-weight: bold;
+            left: 25%;
+            color: yellow;
+        }
+
+        .editForm {
+            display: none;
+            position: fixed;
+            top: 20%;
+            left: 15%;
+            width: 30%;
+            border: chocolate 5px solid;
+            background-color: rgb(190, 197, 201);
+            overflow: hidden;
+            animation: editFormAnime;
+            animation-duration: s; 
+        }
+
+        #imgForm {
+            max-width: 42%;
+            max-height: 60%;
+        }
+
+    </style>
+</head>
+<body>
+    <img class="background" src="img/fightersList.jpg" alt="fightersList_page">
+    <label class="toplabel" >List of game Fighters</label>
+    <div class="tablbox">
+        <table id="tabl" style="width: 93vw">
+            <tr>
+                <td class="tHead"> Имя Бойца </td> <td class="tHead"> Запас здоровья </td> <td class="tHead"> Сила удара </td> <td class="tHead"> Сила защиты </td><td class="tHead"> Информация (боев-побед-поражений) </td>
+            </tr>
+        </table>
+    </div>
+    <label class="intoLabel" >(Click on line to edit or delete Fighter)</label>
+    <div class="buttbox">
+        <button id="save" class="button" onclick="loadDefaults()">Load defaults</button>
+        <button id="save" class="button" onclick="addFighter()" style="background: linear-gradient(to top,  #ee7878, #c73939)" >Add New Fighter</button>
+        <button id="save" class="button" onclick="togloryHall()">Rerurn to Hall of Glory</button>
+    </div>
+    <section id="gamerForm" class="editForm" >
+        <form name="edits">
+        <table id=gamerTab style="margin-top: 20px">
+            <tr class = "colHeader">
+                <td class="colLeft" >  <label class="editLabel" > Fighter ID : </label> </td>
+                <td>  <label id="editId" > </label> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" >  <label class="editLabel" > Name : </label> </td>
+                <td> <input name="name" onfocus="dofocus(event)" onblur="doblur(event)" type="text" style="border: 0px; outline:none" placeholder="Fighter name"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Health : </label> </td>
+                <td> <input name="health" onfocus="dofocus(event)" onblur="doblur(event)" type="number" style="border: 0px; outline:none" placeholder="health"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Power : </label> </td>
+                <td> <input name="power" onfocus="dofocus(event)" onblur="doblur(event)" type="number" style="border: 0px; outline:none" placeholder="power"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Defense : </label> </td>
+                <td> <input name="defense" onfocus="dofocus(event)" onblur="doblur(event)" type="number" style="border: 0px; outline:none" placeholder="defense"> <hr> </td>
+            </tr>
+            <tr>
+                <td class="colLeft" > <label class="editLabel" > Image : </label> </td>
+                <td> <input name="image" onfocus="dofocus(event)" onblur="doblurImg(event)" type="text" style="border: 0px; outline:none" placeholder="image adress"> <hr> </td>
+            </tr>
+        </table>
+        </form>
+        <button id="save" class="button" onclick="saveEdit()">Save</button>
+        <button id="save" class="button" style="margin-left: 0px" onclick="canselEdit()">Cancel</button>
+        <button id="dell" class="button" style="margin-left: 5%; background: linear-gradient(to top,  #ee7878, #c73939) #263e79; width: 25%" onclick="deleteFighter()">Delete</button>
+    </section>
+    <section id="imgForm" class="editForm" style="left: 55%">
+        <img class="fighterImg" src="" alt="Fighter's Image">
+    </section>
+
+    <script>
+
+        const newFighterId = "<< New FIRGHTER >>";
+       
+        let fighters;
+        let tabl;
+        let editForm;
+        let imgForm;
+        let curId;
+        let logg = false;
+
+        function dofocus(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#1d3dad";
+        }
+        function doblur(event) {
+            event.target.nextElementSibling.style.backgroundColor = "#dfe8e8";
+        }
+        function doblurImg(event) {
+            imgForm.firstElementChild.src = event.target.value;
+            event.target.nextElementSibling.style.backgroundColor = "#dfe8e8";
+        }
+
+        function togloryHall() {
+            document.location.href = "/client/pages/gloryHall.html";
+        }
+        
+        function onTabClick(event) {
+            if (logg) return;
+            for (let i=1; i < tabl.children.length; i++)
+                if (tabl.children[i] == event.currentTarget) {
+                    let reqs = [request("/api/fighters/"+fighters[i-1].id),request("/api/details/"+fighters[i-1].id)];
+                    Promise.all(reqs)
+                    .then(responses => {
+                        fighter = JSON.parse(responses[0]);
+                        details = JSON.parse(responses[1]);
+                        document.getElementById("editId").innerText = fighter.id;
+                        curId = fighter.id;
+                        let userForm = document.forms["edits"];
+                        userForm.elements["name"].value = fighter.name;
+                        userForm.elements["health"].value = fighter.health;
+                        userForm.elements["power"].value = fighter.power;
+                        userForm.elements["defense"].value = fighter.defense;
+                        userForm.elements["image"].value = details.source;
+                        imgForm.firstElementChild.src = details.source;
+                        imgForm.class = "editForm";
+                        imgForm.style.display = "block";
+                        editForm.class = "editForm";
+                        editForm.style.display = "block";
+                        editForm.addEventListener("animationend",gamerEdit,true);
+                        document.getElementById("dell").display = "block";
+                        logg = true;
+                        return;
+                    })
+                    .catch((error) => {
+                        erData = JSON.parse(error);
+                        alert("Ошибка "+erData.status+" !\n"+erData.message);
+                    });
+                }
+        }
+
+        function addFighter() {
+            if (logg) return;
+            curId = newFighterId;
+            document.getElementById("editId").innerText = newFighterId;
+            let userForm = document.forms["edits"];
+            userForm.elements["name"].value = "";
+            userForm.elements["health"].value = 50;
+            userForm.elements["power"].value = 5;
+            userForm.elements["defense"].value = 4;
+            userForm.elements["image"].value = "";
+            imgForm.firstElementChild.src = "";
+            imgForm.class = "editForm";
+            imgForm.style.display = "block";
+            editForm.class = "editForm";
+            editForm.style.display = "block";
+            editForm.addEventListener("animationend",gamerEdit,true);
+            document.getElementById("dell").display = "none";
+            logg = true;
+        }
+
+        function gamerEdit() {
+            editForm.removeEventListener("animationend",gamerEdit,true);
+            editForm.style.animation = "";
+            let userForm = document.forms["edits"];
+            userForm.elements["name"].focus();
+        }
+
+        function saveEdit() {
+            if (confirm("Save edited Fighter's data ?")) {
+                let userForm = document.forms["edits"];
+                let fname = userForm.elements["name"].value;
+                let fhealth = userForm.elements["health"].value;
+                let fpower = userForm.elements["power"].value;
+                let fdefense = userForm.elements["defense"].value;
+                let fighter = JSON.stringify({ name: fname, health: fhealth, power: fpower, defense: fdefense });
+                let request = new XMLHttpRequest();
+                if (curId == newFighterId) request.open("POST", "/api/fighters/", true)
+                else request.open("PUT", "/api/fighters/"+curId, true);   
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    try {
+                        let recData = JSON.parse(request.response);
+                        if (recData.error == true) alert("Error "+recData.status+"\n"+recData.message)
+                        else {
+                            let req = new XMLHttpRequest();
+                            if (curId == newFighterId) req.open("POST", "/api/details/", true)
+                            else req.open("PUT", "/api/details/"+curId, true);   
+                            let details = JSON.stringify({ source: userForm.elements["image"].value });
+                            req.setRequestHeader("Content-Type", "application/json");
+                            req.send(details);
+                            canselEdit();
+                            updateList();
+                        }
+                    } catch (error) {
+                        alert(error);    
+                    }
+                });
+                request.send(fighter);
+            }
+        }
+
+        function deleteFighter() {
+            if (confirm("Delete selected Fighter ?")) {
+                let request = new XMLHttpRequest();
+                request.open("DELETE", "/api/fighters/"+curId, true);   
+                request.setRequestHeader("Content-Type", "application/json");
+                request.addEventListener("load", function () {
+                    try {
+                        let recData = JSON.parse(request.response);
+                        if (recData.error == true) alert("Error "+recData.status+"\n"+recData.message)
+                        else {
+                            canselEdit();
+                            updateList();
+                        }
+                    } catch (error) {
+                        alert(error);    
+                    }
+                });
+                request.send();
+            }
+        }
+
+        function canselEdit() {
+            logg = false;
+            imgForm.class = "";
+            imgForm.style.display = "none";
+            editForm.class = "";
+            editForm.style.display = "none";
+        }
+        
+        function createTableRow(tabData, tabClass) {
+            tabRow = document.createElement("tr");
+            tabData.forEach((data, index) => { tabRow.innerHTML += '<td class="' + tabClass[index] + '">' + data + '</td>' });
+            return tabRow
+        }
+
+        function loadDefaults() {
+            if (confirm("Append defaults to Fighters List ?")) { 
+                let reqs = [request('/client/buttle/resources/api/defaultlist.json')]
+                Promise.all(reqs)
+                    .then(responses => {  
+                        let defFighters = JSON.parse(responses[0]);
+                        let reqs = [];
+                        defFighters.forEach(fighter => {
+                            let fightData = JSON.stringify({ name: fighter.name, health: fighter.health, power: fighter.power, defense: fighter.defense });
+                            let req = new XMLHttpRequest();
+                            req.open("POST", "/api/fighters/", true);
+                            req.setRequestHeader("Content-Type", "application/json");
+                            reqs.push(new Promise((resolve,reject) => {
+                                req.addEventListener("load", function () {
+                                    if (req.status == 200) resolve(req.response)
+                                    else reject(req.response);
+                                }); 
+                            }));
+                            req.send(fightData);
+                        });
+                        Promise.all(reqs)
+                        .then(responses => {
+                            let reqs = [];
+                            defFighters.forEach(detail => {
+                                let fightDetail = JSON.stringify({ name: detail.name, source: detail.source });
+                                let req = new XMLHttpRequest();
+                                req.open("POST", "/api/details/", true);
+                                req.setRequestHeader("Content-Type", "application/json");
+                                reqs.push(new Promise((resolve,reject) => {
+                                    req.addEventListener("load", function () {
+                                        if (req.status == 200) resolve(req.response)
+                                        else reject(req.response);
+                                    }); 
+                                }));
+                                req.send(fightDetail);
+                            });
+                            Promise.all(reqs)
+                            .then(responses => { updateList() })
+                            .catch(alert);
+                        }).catch(alert);                      
+                        
+                    }).catch(alert);
+            }
+        }
+
+        function request(action) {
+            let req = new XMLHttpRequest();
+            req.open("GET", action, true);   
+            req.setRequestHeader("Content-Type", "application/json");            
+            req.send();
+            return new Promise((resolve,reject) => {
+                req.addEventListener("load", function () {
+                    if (req.status == 200) resolve(req.response)
+                    else reject(req.response);
+                }); 
+            });
+        }
+        
+        function updateList() {
+            while (tabl.children.length > 1) tabl.removeChild(tabl.lastChild);
+            let reqs = [request("/api/fighters/"),request("/api/fights/")];
+            Promise.all(reqs)
+            .then(responses => {
+                fighters = JSON.parse(responses[0]);
+                fighters.forEach(fighter => Object.defineProperties(fighter, { "fightsUp": {writable:true, value:0}, "fightsDown": {writable:true, value:0}} ));
+                let fights = JSON.parse(responses[1]);
+                fights.forEach(fight => {
+                    let fighter = fighters.find(item => item.id == fight.fighter1);
+                    if (fighter) fighter.fightsUp++; 
+                    fighter = fighters.find(item => item.id == fight.fighter2);
+                    if (fighter) fighter.fightsDown++; 
+                });
+                fighters.forEach(fighter => {
+                    let tabRow = createTableRow([fighter.name,fighter.health,fighter.power,fighter.defense, (fighter.fightsUp+fighter.fightsDown)+" ( win:"+fighter.fightsUp+" fall:"+fighter.fightsDown+" )"],["tRowL","tRowC","tRowC","tRowC","tRowCC"]);
+                    tabRow.onclick = onTabClick;
+                    tabl.appendChild(tabRow);
+                });
+            })
+            .catch(alert);
+        }
+
+        window.onload = function() {
+            tabl = document.getElementById("tabl");
+            editForm = document.getElementById("gamerForm");
+            imgForm = document.getElementById("imgForm");
+            updateList();
+            logg = false;
+        }
+            
+    </script>
+
+</body>
+</html>
+

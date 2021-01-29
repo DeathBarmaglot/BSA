@@ -1,0 +1,98 @@
+﻿<!DOCTYPE HTML>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+    <title>Street Fighters</title>
+    <link rel="stylesheet" href="styles/commonStyles.css">
+</head>
+<body>
+    <img class="background" src="img/gloryHall.jpg" alt="gloryHall_page">
+    <label class="toplabel" >Hall of Glory</label>
+    <div class="tablbox">
+        <table id="tabl" >
+            <tr>
+                <td class="tHead"> Fight Data </td> <td class="tHead"> Gamer </td> <td class="tHead"> Winner </td> <td class="tHead"> Loser </td><td class="tHead"> Fight statistic </td>
+            </tr>
+        </table>
+    </div>
+    <div class="buttbox">
+        <button id="save" class="button" onclick="doGamersList()">Gamers List</button>
+        <button id="save" class="button" onclick="doFightersList()">Firghters List</button>
+        <button id="save" class="button" onclick="doNewButtle()">To Buttle</button>
+    </div>
+
+    <script>
+        function doGamersList() {
+            document.location.href = "gamersList.html";
+        }
+
+        function doFightersList() {
+            document.location.href = "fightersList.html";
+        }
+
+        function doNewButtle() {
+            document.location.href = "/client/buttle/index.html";
+        }
+
+        let tabl;
+
+        function createTableRow(tabData,tabClass) {
+            tabRow = document.createElement("tr");
+            tabData.forEach((data, index) => { tabRow.innerHTML += '<td class="'+tabClass[index]+'">'+data+'</td>' });
+            return tabRow
+        }
+
+        function formatData(data){
+            let datadata = new Date(data);
+            return `${datadata.getDate()}.${datadata.getMonth() + 1}.${datadata.getFullYear()}`;
+        }
+
+        function request(action) {
+            let req = new XMLHttpRequest();
+            req.open("GET", action, true);   
+            req.setRequestHeader("Content-Type", "application/json");            
+            req.send();
+            return new Promise((resolve,reject) => {
+                req.addEventListener("load", function () {
+                    if (req.status == 200) resolve(req.response)
+                    else reject(req.response);
+                }); 
+            });
+        }
+        
+        function updateList() {
+            while (tabl.children.length > 1) tabl.removeChild(tabl.lastChild);
+            let reqs = [request("/api/fights"),request("/api/users"),request("/api/fighters")];
+            Promise.all(reqs)
+            .then(responses => {
+                fights = JSON.parse(responses[0]);
+                gamers = JSON.parse(responses[1]);
+                fighters = JSON.parse(responses[2]);
+                fights.forEach(fight => {
+                    let userId = fight.log[0];
+                    const curGamer = gamers.find(item => item.id === userId);
+                    let gamer = curGamer.firstName+" "+curGamer.lastName;
+                    let winner;
+                    let loser;
+                    fighters.forEach(fighter => {
+                        if (fighter.id == fight.fighter1) winner = fighter.name;
+                        if (fighter.id == fight.fighter2) loser = fighter.name;
+                    }) 
+                    let statistic = "winner: push - "+fight.log[2]+", health - "+fight.log[4]+", ...  loser: push - "+fight.log[3]+", health - "+fight.log[5];
+                    let tabRow = createTableRow([formatData(fight.log[1]),gamer,winner,loser,statistic],["tRowL","tRowL","tRowC","tRowC","tRowCC"]);
+                    tabl.appendChild(tabRow);
+                });
+            })
+            .catch(alert);
+        }
+
+        window.onload = function() {
+            tabl = document.getElementById("tabl");
+            updateList();
+        }
+
+    </script>
+</body>
+</html>
+
